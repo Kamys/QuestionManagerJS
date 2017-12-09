@@ -1,2 +1,7 @@
 /.idea
 bower_components/
+.gradle/
+build/
+src/main/java/
+src/main/resources/
+src/test/
