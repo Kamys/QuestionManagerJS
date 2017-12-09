@@ -1,5 +1,7 @@
 body, html {
+    width: 100%;
     height: 100%;
+    flex: max-content;
     margin: 0;
     background: #cccccc url("../image/background.jpg") no-repeat center;
     background-size: cover;

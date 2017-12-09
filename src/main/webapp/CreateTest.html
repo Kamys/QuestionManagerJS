@@ -13,80 +13,90 @@
 <body>
 <div id="main-div">
     <div class="container">
-        <form>
+
+        <div class="row">
             <div class="form-group">
                 <label class="text-white">Название теста</label>
                 <input type="text" class="form-control"
                        placeholder="Впишите название теста">
             </div>
+        </div>
+
+        <div class="row">
             <div class="form-group">
                 <label class="text-white"> Количество баллов
-                    <input type="number" class="form-control bfh-number  col-4">
-                    <small class="form-text text-white">Минимальное количество баллов, которое необходимо набрать для
+                    <input type="number" class="form-control bfh-number col-sm-4  col-lg-2 col-2">
+                    <small class="form-text text-white">Минимальное количество баллов, которое необходимо набрать
+                        для
                         прохождения теста
                     </small>
                 </label>
             </div>
-            <div class="row">
+        </div>
 
-                <div class="dropdown col-4">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown button
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </div>
-
-                <div class="col-8">
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" role="tabpanel">...</div>
-                    </div>
+        <div class="row">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                        data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="true">
+                    Список вопросов
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton" id="list-question">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary float-left">Submit</button>
-        </form>
+            <div class="col-6">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" role="tabpanel">...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <button type="button" class="btn btn-primary col-2" style="margin-right: 10px">Добавить вопрос</button>
+            <button type="button" class="btn btn-primary col-2">Удалить вопрос</button>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <button type="submit" class="btn btn-primary float-left col-4">Сохранить</button>
+        </div>
     </div>
 </div>
 <!--<a class="list-group-item list-group-item-action" data-toggle="list" role="tab">Profile</a>-->
 <script>
     var dataQuestion = [
-        {questionName: "Вопрос 1"},
-        {questionName: "Вопрос 2"},
-        {questionName: "Вопрос 3"},
+        {id: 0, name: "Вопрос 1", text: "Текст вопроса 1"},
+        {id: 1, name: "Вопрос 2", text: "Текст вопроса 2"},
+        {id: 2, name: "Вопрос 3", text: "Текст вопроса 3"},
     ];
     var listQuestion = $('#list-question');
 
     document.addEventListener('DOMContentLoaded', function () {
         console.log("HELLO");
-        dataQuestion.forEach(function (value) {
-            listQuestion.append(createTab(value["questionName"]))
+        dataQuestion.forEach(function (question) {
+            const tab = createTabQuestion(question["id"], question["name"]);
+            listQuestion.append(tab)
+        });
+        $(".list-group-item").click(function () {
+            var selectQuestion = $(this);
+            $('#dropdownMenu1').text(selectQuestion.text());
+            var id = selectQuestion.attr('id-element');
+            var text = dataQuestion[id].text;
+            $('.tab-content').text(text);
         });
     });
 
-    function createTab(questionName) {
-        questionName = questionName || "Имя вопроса";
+
+    function createTabQuestion(id, name) {
+        name = name || "Имя вопроса";
         var tabQuestion = document.createElement('a');
         tabQuestion.className = "list-group-item list-group-item-action";
         tabQuestion.setAttribute('data-toggle', 'list');
         tabQuestion.setAttribute('role', 'tab');
-        tabQuestion.text = questionName;
-        tabQuestion.addEventListener("click", selectTab);
+        tabQuestion.setAttribute('id-element', id);
+        tabQuestion.text = name;
         return tabQuestion;
     }
-
-    function selectTab(event) {
-        var tabQuestion = event.target;
-        tabQuestion.className = "list-group-item list-group-item-action active";
-        listQuestion.each(function (q) {
-
-            $(this).removeClass()
-        })
-    }
-
 </script>
 </body>
 </html>
