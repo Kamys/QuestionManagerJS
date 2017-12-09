@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание теста</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="style/main.css">
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/tether/dist/js/tether.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+<body>
+<div id="main-div">
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label class="text-white">Название теста</label>
+                <input type="text" class="form-control"
+                       placeholder="Впишите название теста">
+            </div>
+            <div class="form-group">
+                <label class="text-white"> Количество баллов
+                    <input type="number" class="form-control bfh-number  col-4">
+                    <small class="form-text text-white">Минимальное количество баллов, которое необходимо набрать для
+                        прохождения теста
+                    </small>
+                </label>
+            </div>
+            <div class="row">
+
+                <div class="dropdown col-4">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+
+                <div class="col-8">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" role="tabpanel">...</div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary float-left">Submit</button>
+        </form>
+    </div>
+</div>
+<!--<a class="list-group-item list-group-item-action" data-toggle="list" role="tab">Profile</a>-->
+<script>
+    var dataQuestion = [
+        {questionName: "Вопрос 1"},
+        {questionName: "Вопрос 2"},
+        {questionName: "Вопрос 3"},
+    ];
+    var listQuestion = $('#list-question');
+
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("HELLO");
+        dataQuestion.forEach(function (value) {
+            listQuestion.append(createTab(value["questionName"]))
+        });
+    });
+
+    function createTab(questionName) {
+        questionName = questionName || "Имя вопроса";
+        var tabQuestion = document.createElement('a');
+        tabQuestion.className = "list-group-item list-group-item-action";
+        tabQuestion.setAttribute('data-toggle', 'list');
+        tabQuestion.setAttribute('role', 'tab');
+        tabQuestion.text = questionName;
+        tabQuestion.addEventListener("click", selectTab);
+        return tabQuestion;
+    }
+
+    function selectTab(event) {
+        var tabQuestion = event.target;
+        tabQuestion.className = "list-group-item list-group-item-action active";
+        listQuestion.each(function (q) {
+
+            $(this).removeClass()
+        })
+    }
+
+</script>
+</body>
+</html>
