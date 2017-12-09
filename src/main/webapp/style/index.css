@@ -1,0 +1,29 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background: #cccccc url("../image/background.jpg") no-repeat center;
+    background-size: cover;
+}
+
+h1 {
+    background-clip: border-box;
+}
+
+#main-div {
+    background-color: rgba(0, 0, 0, .3);
+    flex: max-content;
+    width: 100%;
+    height: 100%;
+}
+
+.main-title {
+    color: white;
+}
+
+/* Add this css */
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
