@@ -37,13 +37,15 @@
         <div class="row">
             <div class="col-ms-12 col-ms-3 col-md-3">
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                    <button class="btn btn-default dropdown-toggle"
+                            type="button"
+                            id="dropdownMenu1"
                             data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="true">
                         Список вопросов
                     </button>
                     <div class="dropdown-menu scrollable-menu" id="list-question"
-                         style="height: 200%; overflow-y: scroll;">
+                         style="height: 300%; width: 300%; overflow-y: scroll;">
                     </div>
                 </div>
             </div>
@@ -51,15 +53,15 @@
             <div class="col-ms-12 col-ms-6 col-md-9 col-lg-9">
                 <div class="tab-content" id="nav-tabContent">
                     <div class="col-12">
-                        <input type="text" class="form-control"
+                        <input type="text" id="question" style="white-space: normal;" class="form-control"
                                placeholder="Вопрос">
                     </div>
                     <div class="col-12">
-                        <input type="text" class="form-control"
+                        <input type="text" id="answer" class="form-control"
                                placeholder="Ответ">
                     </div>
                     <div class="col-12">
-                        <input type="number" placeholder="Баллы"
+                        <input type="number" id="point" placeholder="Баллы"
                                class="form-control bfh-number col-4">
                     </div>
                 </div>
@@ -80,44 +82,59 @@
     </div>
 </div>
 <script>
+    let listQuestion = $('#list-question');
+
     var dataQuestion = [
-        {id: 0, name: "Вопрос 1", text: "Текст вопроса 1"},
-        {id: 1, name: "Вопрос 2", text: "Текст вопроса 2"},
-        {id: 1, name: "Вопрос 2", text: "Текст вопроса 2"},
-        {id: 1, name: "Вопрос 2", text: "Текст вопроса 2"},
-        {id: 1, name: "Вопрос 2", text: "Текст вопроса 2"},
-        {id: 2, name: "Вопрос 3", text: "Текст вопроса 3"},
-        {id: 2, name: "Вопрос 3", text: "Текст вопроса 3"},
-        {id: 2, name: "Вопрос 3", text: "Текст вопроса 3"},
+        {id: 0, question: "В каком году родился Пушкин A. С. ?", answer: "1799", point: 11},
+        {id: 1, question: "5 + 5 = ?", answer: "10", point: 25},
+        {id: 2, question: "Столица Бельгии?", answer: "Брюссель", point: 5},
+        {
+            id: 3,
+            question: "Как называется группа файлов, которая хранится отдельной группой и имеет собственное имя?",
+            answer: "Каталог",
+            point: 4
+        },
+        {id: 4, question: "Как называются данные или программа на магнитном диске?", answer: "Файл", point: 7},
+        {
+            id: 5,
+            question: "Какое наибольшее количество символов имеет имя файла или каталога в Windows?",
+            answer: "255",
+            point: 12
+        },
+        {id: 6, question: "Какое наибольшее количество символов имеет расширение имени файла?", answer: "3", point: 16},
     ];
-    var listQuestion = $('#list-question');
 
     document.addEventListener('DOMContentLoaded', function () {
         console.log("HELLO");
-        dataQuestion.forEach(function (question) {
-            const tab = createTabQuestion(question["id"], question["name"]);
+        dataQuestion.forEach(function (question, index) {
+            const tab = createTabQuestion(index, question.question);
             listQuestion.append(tab)
         });
         $(".list-group-item").click(function () {
-            var selectQuestion = $(this);
-            $('#dropdownMenu1').text(selectQuestion.text());
-            var id = selectQuestion.attr('id-element');
-            var text = dataQuestion[id].text;
-            $('.tab-content').text(text);
+            const selectQuestion = $(this);
+            const index = selectQuestion.attr('index');
+            showQuestion(dataQuestion[index]);
         });
     });
 
-
-    function createTabQuestion(id, name) {
+    function createTabQuestion(index, name) {
         name = name || "Имя вопроса";
-        var tabQuestion = document.createElement('a');
+        const tabQuestion = document.createElement('a');
         tabQuestion.className = "list-group-item list-group-item-action";
         tabQuestion.setAttribute('data-toggle', 'list');
         tabQuestion.setAttribute('role', 'tab');
-        tabQuestion.setAttribute('id-element', id);
+        tabQuestion.setAttribute('index', index);
         tabQuestion.text = name;
         return tabQuestion;
     }
+
+    function showQuestion(itemQuestion) {
+        $('#question').val(itemQuestion.question);
+        $('#answer').val(itemQuestion.answer);
+        $('#point').val(itemQuestion.point);
+    }
+
+
 </script>
 </body>
 </html>

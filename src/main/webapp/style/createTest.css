@@ -2,3 +2,7 @@
     padding: 3px 10px;
     font-size: 70%;
 }
+
+input {
+    -webkit-flex: 1;
+}
