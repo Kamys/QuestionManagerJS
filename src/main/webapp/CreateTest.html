@@ -86,12 +86,13 @@
             <button type="button" onclick="addQuestion()" class="btn btn-primary co-md-6 col-4"
                     style="margin-right: 10px; white-space: normal;">Добавить вопрос
             </button>
-            <button type="button" class="btn btn-danger co-md-6 col-4" style="white-space: normal;">Удалить вопрос
+            <button type="button" onclick="deleteCurrentQuestion()" class="btn btn-danger co-md-6 col-4"
+                    style="white-space: normal;">Удалить вопрос
             </button>
         </div>
 
         <div class="row" style="margin-top: 10px;">
-            <button type="submit" class="btn btn-primary float-left col-4">Сохранить тест</button>
+            <button type="submit" onclick="saveTest()" class="btn btn-primary float-left col-4">Сохранить тест</button>
         </div>
     </div>
 </div>
@@ -123,21 +124,17 @@
         {question: "Какое наибольшее количество символов имеет расширение имени файла?", answer: "3", point: 16},
     ];
 
-    $('#question').on('input',inputQuestion );
-    $('#answer').on('input',inputQuestion );
-    $('#point').on('input',inputQuestion );
+    $('#question').on('input', inputQuestion);
+    $('#answer').on('input', inputQuestion);
+    $('#point').on('input', inputQuestion);
 
+    function saveTest() {
+        let testJson = JSON.parse(JSON.stringify(dataQuestion));
+        $.cookie("test-data", testJson);
+    }
 
     function inputQuestion() {
         $('#btnSaveQuestion').prop('disabled', false);
-    }
-
-    function saveQuestion() {
-        dataQuestion[currentItem].question = $('#question').val();
-        dataQuestion[currentItem].answer = $('#answer').val();
-        dataQuestion[currentItem].point = $('#point').val();
-        updateList();
-        $('#btnSaveQuestion').prop('disabled', true);
     }
 
     function updateList() {
@@ -147,13 +144,16 @@
             listQuestion.append(tab)
         });
         $(".list-group-item").click(itemClick);
+    }
 
-        function itemClick() {
-            const selectQuestion = $(this);
-            const index = selectQuestion.attr('index');
-            currentItem = index;
-            showQuestion(dataQuestion[index]);
-        }
+    function itemClick() {
+        const index = $(this).attr('index');
+        selectQuestion(index);
+    }
+
+    function selectQuestion(index) {
+        currentItem = index;
+        showQuestion(dataQuestion[index]);
     }
 
     function createTabQuestion(index, name) {
@@ -176,6 +176,23 @@
     function addQuestion() {
         dataQuestion.push({question: "Вопрос " + dataQuestion.length, answer: "", point: 0});
         updateList();
+        selectQuestion(dataQuestion.length - 1);
+    }
+
+    function saveQuestion() {
+        dataQuestion[currentItem].question = $('#question').val();
+        dataQuestion[currentItem].answer = $('#answer').val();
+        dataQuestion[currentItem].point = $('#point').val();
+        updateList();
+        $('#btnSaveQuestion').prop('disabled', true);
+    }
+
+    function deleteCurrentQuestion() {
+        delete dataQuestion[currentItem];
+        updateList();
+        $('#question').val('');
+        $('#answer').val('');
+        $('#point').val('');
     }
 </script>
 </body>
