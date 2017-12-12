@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Создание теста</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/createTest.css">
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/tether/dist/js/tether.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="js/CreateQuestion.js"></script>
 </head>
 <body>
 <div id="main-div">
@@ -64,12 +72,18 @@
                         <input type="number" id="point" placeholder="Баллы"
                                class="form-control bfh-number col-4">
                     </div>
+                    <div class="col-12">
+                        <button type="button" id="btnSaveQuestion" onclick="saveQuestion()" class="btn btn-primary"
+                                style="white-space: normal;" disabled>Сохранить вопрос
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
 
         <div class="row" style="margin-top: 10px;">
-            <button type="button" class="btn btn-primary co-md-6 col-4"
+            <button type="button" onclick="addQuestion()" class="btn btn-primary co-md-6 col-4"
                     style="margin-right: 10px; white-space: normal;">Добавить вопрос
             </button>
             <button type="button" class="btn btn-danger co-md-6 col-4" style="white-space: normal;">Удалить вопрос
@@ -82,40 +96,65 @@
     </div>
 </div>
 <script>
-    let listQuestion = $('#list-question');
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("HELLO");
+        updateList();
+    });
+
+    var listQuestion = $('#list-question');
+    var currentItem;
 
     var dataQuestion = [
-        {id: 0, question: "В каком году родился Пушкин A. С. ?", answer: "1799", point: 11},
-        {id: 1, question: "5 + 5 = ?", answer: "10", point: 25},
-        {id: 2, question: "Столица Бельгии?", answer: "Брюссель", point: 5},
+        {question: "В каком году родился Пушкин A. С. ?", answer: "1799", point: 11},
+        {question: "5 + 5 = ?", answer: "10", point: 25},
+        {question: "Столица Бельгии?", answer: "Брюссель", point: 5},
         {
-            id: 3,
             question: "Как называется группа файлов, которая хранится отдельной группой и имеет собственное имя?",
             answer: "Каталог",
             point: 4
         },
-        {id: 4, question: "Как называются данные или программа на магнитном диске?", answer: "Файл", point: 7},
+        {question: "Как называются данные или программа на магнитном диске?", answer: "Файл", point: 7},
         {
-            id: 5,
+
             question: "Какое наибольшее количество символов имеет имя файла или каталога в Windows?",
             answer: "255",
             point: 12
         },
-        {id: 6, question: "Какое наибольшее количество символов имеет расширение имени файла?", answer: "3", point: 16},
+        {question: "Какое наибольшее количество символов имеет расширение имени файла?", answer: "3", point: 16},
     ];
 
-    document.addEventListener('DOMContentLoaded', function () {
-        console.log("HELLO");
+    $('#question').on('input',inputQuestion );
+    $('#answer').on('input',inputQuestion );
+    $('#point').on('input',inputQuestion );
+
+
+    function inputQuestion() {
+        $('#btnSaveQuestion').prop('disabled', false);
+    }
+
+    function saveQuestion() {
+        dataQuestion[currentItem].question = $('#question').val();
+        dataQuestion[currentItem].answer = $('#answer').val();
+        dataQuestion[currentItem].point = $('#point').val();
+        updateList();
+        $('#btnSaveQuestion').prop('disabled', true);
+    }
+
+    function updateList() {
+        listQuestion.empty();
         dataQuestion.forEach(function (question, index) {
             const tab = createTabQuestion(index, question.question);
             listQuestion.append(tab)
         });
-        $(".list-group-item").click(function () {
+        $(".list-group-item").click(itemClick);
+
+        function itemClick() {
             const selectQuestion = $(this);
             const index = selectQuestion.attr('index');
+            currentItem = index;
             showQuestion(dataQuestion[index]);
-        });
-    });
+        }
+    }
 
     function createTabQuestion(index, name) {
         name = name || "Имя вопроса";
@@ -134,7 +173,10 @@
         $('#point').val(itemQuestion.point);
     }
 
-
+    function addQuestion() {
+        dataQuestion.push({question: "Вопрос " + dataQuestion.length, answer: "", point: 0});
+        updateList();
+    }
 </script>
 </body>
 </html>
