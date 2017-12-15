@@ -26,27 +26,46 @@
 <body>
 <div id="main-div">
     <div class="container">
-
+        <!-- Тест -->
         <div class="row">
-            <div class="form-group">
-                <label class="text-white">Название теста</label>
-                <input class="form-control"
-                       placeholder="Впишите название теста">
+
+            <!-- Выбор теста -->
+            <div class="col-ms-12 col-ms-3 col-md-3">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle"
+                            type="button"
+                            id="dropdownMenu2"
+                            data-toggle="dropdown">
+                        Список тестов
+                    </button>
+                    <div class="dropdown-menu scrollable-menu" id="list-test"
+                         style="height: 300%; width: 300%; overflow-y: scroll;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Редактирование теста -->
+            <div class="col-ms-12 col-ms-6 col-md-9 col-lg-9">
+                <div class="tab-content">
+                    <div class="col-12 mt-1">
+                        <input id="test-input" style="white-space: normal;" class="form-control"
+                               placeholder="Название теста">
+                    </div>
+                    <div class="col-12 mt-1">
+                        <input id="max-points-input" style="white-space: normal;" class="form-control"
+                               placeholder="Количество баллов">
+                        <small class="form-text text-white">Минимальное количество баллов, которое необходимо набрать
+                            для прохождения теста
+                        </small>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="form-group">
-                <label class="text-white"> Количество баллов
-                    <input type="number" class="form-control bfh-number col-4">
-                </label>
-                <small class="form-text text-white">Минимальное количество баллов, которое необходимо набрать
-                    для прохождения теста
-                </small>
-            </div>
-        </div>
+        <!-- Вопрос -->
+        <div class="row mt-3">
 
-        <div class="row">
+            <!-- Выбор вопроса -->
             <div class="col-ms-12 col-ms-3 col-md-3">
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle"
@@ -61,40 +80,40 @@
                 </div>
             </div>
 
+            <!-- Редактирование вопроса -->
             <div class="col-ms-12 col-ms-6 col-md-9 col-lg-9">
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="col-12">
+                <div class="tab-content">
+                    <div class="col-12 mt-1">
                         <input id="question-input" style="white-space: normal;" class="form-control"
                                placeholder="Вопрос">
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 mt-1">
                         <input id="answer-input" class="form-control"
                                placeholder="Ответ">
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 mt-1">
                         <input type="number" id="point-input" placeholder="Баллы"
                                class="form-control bfh-number col-4">
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 mt-1">
                         <button type="button" id="question-btn-save" class="btn btn-primary"
                                 style="white-space: normal;" disabled>Сохранить вопрос
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>
 
-        <div class="row" style="margin-top: 10px;">
-            <button type="button" id="question-btn-add" class="btn btn-primary co-md-6 col-4"
-                    style="margin-right: 10px; white-space: normal;">Добавить вопрос
+        <div class="row mt-1">
+            <button type="button" id="question-btn-add" class="btn btn-primary co-md-6 col-4 mt-1"
+                    style="white-space: normal;">Добавить вопрос
             </button>
-            <button type="button" id="question-btn-delete" class="btn btn-danger co-md-6 col-4"
+            <button type="button" id="question-btn-delete" class="btn btn-danger co-md-6 col-4 mt-1 ml-1"
                     style="white-space: normal;">Удалить вопрос
             </button>
         </div>
 
-        <div class="row" style="margin-top: 10px;">
+        <div class="row mt-1">
             <button type="button" id="test-btn-save" class="btn btn-primary float-left col-4">Сохранить тест</button>
         </div>
     </div>
