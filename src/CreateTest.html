@@ -129,7 +129,7 @@
     $('#point').on('input', inputQuestion);
 
     function saveTest() {
-        let testJson = JSON.parse(JSON.stringify(dataQuestion));
+        var testJson = JSON.parse(JSON.stringify(dataQuestion));
         $.cookie("test-data", testJson);
     }
 

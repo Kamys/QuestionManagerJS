@@ -1,5 +1,5 @@
 .idea/
-bower_components/
+src/bower_components/
 .gradle/
 build/
 src/main/java/
