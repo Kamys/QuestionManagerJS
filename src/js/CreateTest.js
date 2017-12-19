@@ -27,13 +27,78 @@ $(function () {
         {id: 1, name: "Информатика", maxPoint: 11, questions: questionInf}
     ];
 
+    const questionManager = (function () {
+        let questions;
+        let questionEdit;
+        let updateListCurrentQuestions = function () {
+            updateList(currentTest.questions, listQuestion, q => q.question, show);
+        };
+        let initChangeInput = function () {
+            $('#question-input').on('input', inputQuestion);
+            $('#answer-input').on('input', inputQuestion);
+            $('#point-input').on('input', inputQuestion);
+
+            function inputQuestion() {
+                $('#question-btn-save').prop('disabled', false);
+            }
+        };
+        let show = function (question) {
+            $('#question-input').val(question.question);
+            $('#answer-input').val(question.answer);
+            $('#point-input').val(question.point);
+            questionEdit = question;
+        };
+
+        let addQuestion = function () {
+            let length = questions.length;
+            questions.push({question: "Вопрос " + length, answer: "", point: 0});
+            updateListCurrentQuestions();
+            show(questions[length]);
+        };
+
+        let save = function () {
+            questionEdit.question = $('#question-input').val();
+            questionEdit.answer = $('#answer-input').val();
+            questionEdit.point = $('#point-input').val();
+            updateListCurrentQuestions();
+            $('#question-btn-save').prop('disabled', true);
+        };
+
+        let deleteCurrent = function () {
+            let indexOf = questions.indexOf(questionEdit);
+            questions.splice(indexOf, 1);
+            updateListCurrentQuestions();
+            $('#question-input').val('');
+            $('#answer-input').val('');
+            $('#point-input').val('');
+            toastr.info("Вопрос удалён")
+        };
+
+        return {
+            init: function () {
+                $('#question-btn-save').click(save);
+                $('#question-btn-add').click(addQuestion);
+                $('#question-btn-delete').click(deleteCurrent);
+                initChangeInput();
+            },
+            setQuestion: function (data) {
+                questions = data;
+                updateListCurrentQuestions();
+                if (questions.length !== 0) {
+                    show(questions[0]);
+                }
+            }
+        }
+    }());
+
     const listTest = $('#list-test');
     const listQuestion = $('#list-question');
     let currentTest;
-    let currentQuestion;
 
-    initChangeInput();
-    initListenerButton();
+
+    questionManager.init();
+
+    $('#test-btn-save').click(saveTest);
     initListTest();
 
     updateList(dataTest, listTest, x => x.name, showTest);
@@ -49,44 +114,7 @@ $(function () {
         currentTest = test;
 
         let questions = test.questions;
-        updateList(questions, listQuestion, q => q.question, showQuestion);
-        if (questions.length !== 0) {
-            showQuestion(questions[0]);
-        }
-    }
-
-    function updateList(listData, DDL, getName, click) {
-        DDL.empty();
-        listData.forEach(function (item, index) {
-            const tab = createDDLItem(index, getName(item));
-            DDL.append(tab)
-        });
-        $(".list-group-item").click(itemClick);
-
-        function itemClick() {
-            const index = $(this).attr('index');
-            let item = listData[index];
-            click(item);
-        }
-    }
-
-
-    function initChangeInput() {
-        $('#question-input').on('input', inputQuestion);
-        $('#answer-input').on('input', inputQuestion);
-        $('#point-input').on('input', inputQuestion);
-
-        function inputQuestion() {
-            $('#question-btn-save').prop('disabled', false);
-        }
-    }
-
-    function initListenerButton() {
-        $('#question-btn-save').click(saveQuestion);
-        $('#question-btn-add').click(addQuestion);
-        $('#question-btn-delete').click(deleteCurrentQuestion);
-
-        $('#test-btn-save').click(saveTest);
+        questionManager.setQuestion(questions);
     }
 
     function saveTest() {
@@ -105,39 +133,18 @@ $(function () {
         >${name || "Имя вопроса"}</a>`);
     }
 
-    function showQuestion(question) {
-        $('#question-input').val(question.question);
-        $('#answer-input').val(question.answer);
-        $('#point-input').val(question.point);
-        currentQuestion = question;
-    }
+    function updateList(listData, DDL, getName, click) {
+        DDL.empty();
+        listData.forEach(function (item, index) {
+            const tab = createDDLItem(index, getName(item));
+            DDL.append(tab)
+        });
+        $(".list-group-item").click(itemClick);
 
-    function addQuestion() {
-        let length = currentTest.questions.length;
-        currentTest.questions.push({question: "Вопрос " + length, answer: "", point: 0});
-        updateListCurrentQuestions();
-        showQuestion(currentTest.questions[length]);
-    }
-
-    function saveQuestion() {
-        currentQuestion.question = $('#question-input').val();
-        currentQuestion.answer = $('#answer-input').val();
-        currentQuestion.point = $('#point-input').val();
-        updateListCurrentQuestions();
-        $('#question-btn-save').prop('disabled', true);
-    }
-
-    function deleteCurrentQuestion() {
-        let indexOf = currentTest.questions.indexOf(currentQuestion);
-        currentTest.questions.splice(indexOf,1);
-        updateListCurrentQuestions();
-        $('#question-input').val('');
-        $('#answer-input').val('');
-        $('#point-input').val('');
-        toastr.info("Вопрос удалён")
-    }
-
-    function updateListCurrentQuestions() {
-        updateList(currentTest.questions, listQuestion, q => q.question, showQuestion);
+        function itemClick() {
+            const index = $(this).attr('index');
+            let item = listData[index];
+            click(item);
+        }
     }
 });
