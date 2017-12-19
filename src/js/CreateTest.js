@@ -46,6 +46,7 @@ $(function () {
             $('#question-input').val(question.question);
             $('#answer-input').val(question.answer);
             $('#point-input').val(question.point);
+            $('#question-btn-delete').prop('disabled', false);
             questionEdit = question;
         };
 
@@ -71,14 +72,18 @@ $(function () {
             $('#question-input').val('');
             $('#answer-input').val('');
             $('#point-input').val('');
+            $('#question-btn-delete').prop('disabled', true);
             toastr.info("Вопрос удалён")
         };
 
         return {
             init: function () {
-                $('#question-btn-save').click(save);
+                $('#question-btn-save').click(save)
+                    .prop('disabled', true);
                 $('#question-btn-add').click(addQuestion);
-                $('#question-btn-delete').click(deleteCurrent);
+                $('#question-btn-delete').click(deleteCurrent)
+                    .prop('disabled', true);
+
                 initChangeInput();
             },
             setQuestion: function (data) {
