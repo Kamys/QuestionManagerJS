@@ -29,8 +29,8 @@ $(function () {
 
     const listTest = $('#list-test');
     const listQuestion = $('#list-question');
-    let currentItem;
-    let currentQuestions;
+    let currentTest;
+    let currentQuestion;
 
     initChangeInput();
     initListenerButton();
@@ -46,11 +46,11 @@ $(function () {
     function showTest(test) {
         $('#test-input').val(test.name);
         $('#max-points-input').val(test.maxPoint);
+        currentTest = test;
 
         let questions = test.questions;
         updateList(questions, listQuestion, q => q.question, showQuestion);
-        currentQuestions = questions;
-        if(questions.length !== 0){
+        if (questions.length !== 0) {
             showQuestion(questions[0]);
         }
     }
@@ -90,15 +90,9 @@ $(function () {
     }
 
     function saveTest() {
-        const testJson = JSON.stringify(currentQuestions);
+        const testJson = JSON.stringify(currentTest);
         $.cookie("test-data", testJson);
         toastr.success("Test save.");
-    }
-
-
-    function selectQuestion(question) {
-        currentItem = question;
-        showQuestion(question);
     }
 
     function createDDLItem(index, name) {
@@ -115,31 +109,35 @@ $(function () {
         $('#question-input').val(question.question);
         $('#answer-input').val(question.answer);
         $('#point-input').val(question.point);
+        currentQuestion = question;
     }
 
     function addQuestion() {
-        currentQuestions.push({question: "Вопрос " + currentQuestions.length, answer: "", point: 0});
+        let length = currentTest.questions.length;
+        currentTest.questions.push({question: "Вопрос " + length, answer: "", point: 0});
         updateListCurrentQuestions();
-        selectQuestion(currentQuestions.length - 1);
+        showQuestion(currentTest.questions[length]);
     }
 
     function saveQuestion() {
-        currentItem.question = $('#question-input').val();
-        currentItem.answer = $('#answer-input').val();
-        currentItem.point = $('#point-input').val();
+        currentQuestion.question = $('#question-input').val();
+        currentQuestion.answer = $('#answer-input').val();
+        currentQuestion.point = $('#point-input').val();
         updateListCurrentQuestions();
         $('#question-btn-save').prop('disabled', true);
     }
 
     function deleteCurrentQuestion() {
-        delete currentQuestions[currentItem];
+        let indexOf = currentTest.questions.indexOf(currentQuestion);
+        currentTest.questions.splice(indexOf,1);
         updateListCurrentQuestions();
         $('#question-input').val('');
         $('#answer-input').val('');
         $('#point-input').val('');
+        toastr.info("Вопрос удалён")
     }
 
-    function updateListCurrentQuestions(){
-        updateList(currentQuestions, listQuestion, q => q.question, selectQuestion);
+    function updateListCurrentQuestions() {
+        updateList(currentTest.questions, listQuestion, q => q.question, showQuestion);
     }
 });
