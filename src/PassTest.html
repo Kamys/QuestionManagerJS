@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Прохождение теста</title>
+    <title>Тест</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -25,30 +26,11 @@
 <body>
 <div id="background">
     <div class="container">
-        <div class="row"><h1 class="text-white">Выбирите тест</h1></div>
-        <div class="row">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Список тестов
-                </button>
-                <div id="test-list" class="dropdown-menu" aria-labelledby="dropdownMenuButton"></div>
-            </div>
-            <div class="col-12"></div>
-            <dl class="text-white mt-2">
-                <dt>Имя теста:</dt>
-                <dd id="test-name">--</dd>
-                <dt>Проходной балл:</dt>
-                <dd id="test-maxPoint">--</dd>
-            </dl>
-        </div>
-        <div class="row">
-            <button type="button" class="btn btn-primary" id="test-btn-start">Пройти тест</button>
-        </div>
+        <h1 class="text-white" id="test-name">test</h1>
     </div>
 </div>
+</body>
 <script>
-
     const questionHist = [
         {question: "В каком году родился Пушкин A. С. ?", answer: "1799", point: 11},
         {question: "5 + 5 = ?", answer: "10", point: 25},
@@ -77,29 +59,8 @@
         {id: 1, name: "Информатика", maxPoint: 25, questions: questionInf}
     ];
 
-    let currentTest;
-
-    let testBtnStart = $('#test-btn-start');
-    testBtnStart.prop('disabled', true);
-    testBtnStart.click(function () {
-        location.href ='PassTest.html?id='+currentTest.id
-    });
-
-    dataTest.forEach(addTest);
-
-    function addTest(test, index) {
-        $('#test-list').append(
-            $(`<a class="dropdown-item" index=${index} href="#">${test.name}</a>`)
-                .click(showTest)
-        );
-    }
-
-    function showTest() {
-        currentTest = dataTest[$(this).attr('index')];
-        $('#test-name').text(currentTest.name);
-        $('#test-maxPoint').text(currentTest.maxPoint);
-        $('#test-btn-start').prop('disabled', false);
-    }
+    const url = new URL(window.location);
+    let id = url.searchParams.get("id");
+    $('#test-name').text('Вы проходите тест: '+dataTest[id].name);
 </script>
-</body>
 </html>
