@@ -30,7 +30,7 @@ $(function () {
     const questionManager = (function () {
         let questions;
         let questionEdit;
-        let updateListCurrentQuestions = function () {
+        let updateListQuestions = function () {
             updateList(currentTest.questions, listQuestion, q => q.question, show);
         };
         let initChangeInput = function () {
@@ -53,7 +53,7 @@ $(function () {
         let addQuestion = function () {
             let length = questions.length;
             questions.push({question: "Вопрос " + length, answer: "", point: 0});
-            updateListCurrentQuestions();
+            updateListQuestions();
             show(questions[length]);
         };
 
@@ -61,14 +61,14 @@ $(function () {
             questionEdit.question = $('#question-input').val();
             questionEdit.answer = $('#answer-input').val();
             questionEdit.point = $('#point-input').val();
-            updateListCurrentQuestions();
+            updateListQuestions();
             $('#question-btn-save').prop('disabled', true);
         };
 
         let deleteCurrent = function () {
             let indexOf = questions.indexOf(questionEdit);
             questions.splice(indexOf, 1);
-            updateListCurrentQuestions();
+            updateListQuestions();
             $('#question-input').val('');
             $('#answer-input').val('');
             $('#point-input').val('');
@@ -88,7 +88,7 @@ $(function () {
             },
             setQuestion: function (data) {
                 questions = data;
-                updateListCurrentQuestions();
+                updateListQuestions();
                 if (questions.length !== 0) {
                     show(questions[0]);
                 }
@@ -153,14 +153,13 @@ $(function () {
         >${name || "Имя вопроса"}</a>`);
     }
 
-    function updateList(listData, DDL, getName, click) {
+    function updateList(listData, DDL, getName) {
         DDL.empty();
         listData.forEach(function (item, index) {
             const tab = createDDLItem(index, getName(item));
+            tab.onclick = itemClick;
             DDL.append(tab)
         });
-        $(".list-group-item").click(itemClick);
-
         function itemClick() {
             const index = $(this).attr('index');
             let item = listData[index];
