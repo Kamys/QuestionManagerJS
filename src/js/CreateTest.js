@@ -104,18 +104,25 @@ $(function () {
     questionManager.init();
 
     $('#test-btn-save').click(saveTest);
-    initListTest();
+    updateListTest();
+    initChangeInputTest();
 
-    updateList(dataTest, listTest, x => x.name, showTest);
+    function initChangeInputTest() {
+        $('#test-input-name').on('input', inputTest);
+        $('#test-input-max-points').on('input', inputTest);
 
+        function inputTest() {
+            $('#test-btn-save').prop('disabled', false);
+        }
+    }
 
-    function initListTest() {
-        listTest.empty();
+    function updateListTest() {
+        updateList(dataTest, listTest, x => x.name, showTest);
     }
 
     function showTest(test) {
-        $('#test-input').val(test.name);
-        $('#max-points-input').val(test.maxPoint);
+        $('#test-input-name').val(test.name);
+        $('#test-input-max-points').val(test.maxPoint);
         currentTest = test;
 
         let questions = test.questions;
@@ -123,7 +130,15 @@ $(function () {
     }
 
     function saveTest() {
-        const testJson = JSON.stringify(currentTest);
+        currentTest.name = $('#test-input-name').val();
+        currentTest.maxPoint = $('#test-input-max-points').val();
+        $('#test-btn-save').prop('disabled', true);
+        saveData();
+        updateListTest();
+    }
+
+    function saveData() {
+        const testJson = JSON.stringify(dataTest);
         $.cookie("test-data", testJson);
         toastr.success("Test save.");
     }
