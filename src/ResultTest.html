@@ -27,8 +27,13 @@
 <div id="background">
     <div class="container">
         <div class="row">
+            <div class="col-12">
+                <h1 class="bg-danger text-white" id="test-status">К сожалению тест не сдан!</h1>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12 text-white">
-                <h1>Тест: <span class="test-name">История</span> <span id="test-status">Завершён успешно</span></h1>
+                <h1>Тест: <span class="test-name">История</span></h1>
             </div>
         </div>
         <div class="row">
@@ -49,12 +54,20 @@
 
     $('#test-name').text(currentTest);
 
-    let passedTrue = currentPassTest.answers.filter(t => t.passed === true);
-    let allQuestions = currentTest.answers.length;
-    let answerPassedTrue = passedTrue.length;
+    let passedAnswersTrue = currentPassTest.answers.filter(t => t.passed === true);
+    let allQuestions = currentTest.questions.length;
+    let answerPassedTrue = passedAnswersTrue.length;
     $('#answer-passed-true').text(answerPassedTrue);
     $('#answer-all').text(allQuestions);
-    $('#test-status').text();
+
+    let pointsObtained = 0;
+    passedAnswersTrue.forEach(answer => {
+        let question = currentTest.questions[answer.questionId];
+        pointsObtained += question.point;
+    });
+    if (pointsObtained >= currentTest.maxPoint) {
+        $('#test-status').text("Поздравляем, Вы успешно сдали тест!").attr("class",'bg-success text-white');
+    }
 </script>
 </body>
 </html>

@@ -66,6 +66,7 @@
         currentPassTest.questionId += 1;
         if(currentPassTest.questionId >= dataTest[currentPassTest.testId].questions.length){
             location.href = 'ResultTest.html';
+            return;
         }
         location.href = 'PassTest.html';
         dataProvider.saveCurrentTest(currentPassTest)

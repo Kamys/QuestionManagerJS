@@ -49,37 +49,36 @@
 </div>
 <script>
 
-    if($.cookie("test-data") === undefined){
+    if ($.cookie("test-data") === undefined) {
         initData();
     }
 
     function initData() {
         const questionHist = [
-            {question: "В каком году родился Пушкин A. С. ?", answer: "1799", point: 11},
-            {question: "5 + 5 = ?", answer: "10", point: 25},
-            {question: "В каком году основан воронеж?", answer: "1586", point: 25},
-            {question: "Столица Бельгии?", answer: "Брюссель", point: 5}
+            {question: "В каком году родился Пушкин A. С. ?", answer: "1799", point: 2},
+            {question: "5 + 5 = ?", answer: "10", point: 2},
+            {question: "В каком году основан воронеж?", answer: "1586", point: 2},
+            {question: "Столица Бельгии?", answer: "Брюссель", point: 2}
         ];
 
         const questionInf = [
             {
                 question: "Как называется группа файлов, которая хранится отдельной группой и имеет собственное имя?",
                 answer: "Каталог",
-                point: 4
+                point: 2
             },
-            {question: "Как называются данные или программа на магнитном диске?", answer: "Файл", point: 7},
+            {question: "Как называются данные или программа на магнитном диске?", answer: "Файл", point: 2},
             {
-
                 question: "Какое наибольшее количество символов имеет имя файла или каталога в Windows?",
                 answer: "255",
-                point: 12
+                point: 2
             },
-            {question: "Какое наибольшее количество символов имеет расширение имени файла?", answer: "3", point: 16},
+            {question: "Какое наибольшее количество символов имеет расширение имени файла?", answer: "3", point: 3},
         ];
 
         const dataTest = [
-            {id: 0, name: "История", maxPoint: 11, questions: questionHist},
-            {id: 1, name: "Информатика", maxPoint: 25, questions: questionInf}
+            {id: 0, name: "История", maxPoint: 5, questions: questionHist},
+            {id: 1, name: "Информатика", maxPoint: 7, questions: questionInf}
         ];
 
         const testJson = JSON.stringify(dataTest);
