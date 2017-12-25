@@ -15,5 +15,14 @@ const DataProvider = (function () {
         $.cookie("test-data", testJson);
     };
 
+    Singleton.prototype.saveCurrentTest = function (dataTest) {
+        const testJson = JSON.stringify(dataTest);
+        $.cookie("current-test", testJson);
+    };
+
+    Singleton.prototype.getCurrentTest = function () {
+        return JSON.parse($.cookie("current-test"));
+    };
+
     return Singleton;
 })();

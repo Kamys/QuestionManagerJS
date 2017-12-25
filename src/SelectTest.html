@@ -49,14 +49,22 @@
 </div>
 <script src="js/DataProvider.js"></script>
 <script>
-    const dataTest = new DataProvider().getTests();
+    const dataProvider = new DataProvider();
+    const dataTest = dataProvider.getTests();
 
     let currentTest;
 
     let testBtnStart = $('#test-btn-start');
     testBtnStart.prop('disabled', true);
+
     testBtnStart.click(function () {
-        location.href ='PassTest.html?id='+currentTest.id
+        let currentPassTest = {
+            testId: currentTest.id,
+            questionId: 0,
+            answers: []
+        };
+        dataProvider.saveCurrentTest(currentPassTest);
+        location.href = 'PassTest.html'
     });
 
     dataTest.forEach(addTest);
