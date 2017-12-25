@@ -1,31 +1,5 @@
 $(function () {
-    const questionHist = [
-        {question: "В каком году родился Пушкин A. С. ?", answer: "1799", point: 11},
-        {question: "5 + 5 = ?", answer: "10", point: 25},
-        {question: "В каком году основан воронеж?", answer: "1586", point: 25},
-        {question: "Столица Бельгии?", answer: "Брюссель", point: 5}
-    ];
-
-    const questionInf = [
-        {
-            question: "Как называется группа файлов, которая хранится отдельной группой и имеет собственное имя?",
-            answer: "Каталог",
-            point: 4
-        },
-        {question: "Как называются данные или программа на магнитном диске?", answer: "Файл", point: 7},
-        {
-
-            question: "Какое наибольшее количество символов имеет имя файла или каталога в Windows?",
-            answer: "255",
-            point: 12
-        },
-        {question: "Какое наибольшее количество символов имеет расширение имени файла?", answer: "3", point: 16},
-    ];
-
-    const dataTest = [
-        {id: 0, name: "История", maxPoint: 11, questions: questionHist},
-        {id: 1, name: "Информатика", maxPoint: 11, questions: questionInf}
-    ];
+    dataTest = new DataProvider().getTests();
 
     const questionManager = (function () {
         let questions;
@@ -138,9 +112,7 @@ $(function () {
     }
 
     function saveData() {
-        const testJson = JSON.stringify(dataTest);
-        $.cookie("test-data", testJson);
-        toastr.success("Test save.");
+        new DataProvider().saveTest(dataTest)
     }
 
     function createDDLItem(index, name) {
@@ -153,11 +125,11 @@ $(function () {
         >${name || "Имя вопроса"}</a>`);
     }
 
-    function updateList(listData, DDL, getName) {
+    function updateList(listData, DDL, getName, click) {
         DDL.empty();
         listData.forEach(function (item, index) {
             const tab = createDDLItem(index, getName(item));
-            tab.onclick = itemClick;
+            tab.click(itemClick);
             DDL.append(tab)
         });
         function itemClick() {

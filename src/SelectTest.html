@@ -47,8 +47,9 @@
         </div>
     </div>
 </div>
+<script src="js/DataProvider.js"></script>
 <script>
-    const dataTest = JSON.parse($.cookie("test-data"));
+    const dataTest = new DataProvider().getTests();
 
     let currentTest;
 

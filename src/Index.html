@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <link rel="stylesheet" href="style/index.css">
     <link rel="stylesheet" href="style/main.css">
@@ -39,5 +47,44 @@
         </div>
     </footer>
 </div>
+<script>
+
+    if($.cookie("test-data") === undefined){
+        initData();
+    }
+
+    function initData() {
+        const questionHist = [
+            {question: "В каком году родился Пушкин A. С. ?", answer: "1799", point: 11},
+            {question: "5 + 5 = ?", answer: "10", point: 25},
+            {question: "В каком году основан воронеж?", answer: "1586", point: 25},
+            {question: "Столица Бельгии?", answer: "Брюссель", point: 5}
+        ];
+
+        const questionInf = [
+            {
+                question: "Как называется группа файлов, которая хранится отдельной группой и имеет собственное имя?",
+                answer: "Каталог",
+                point: 4
+            },
+            {question: "Как называются данные или программа на магнитном диске?", answer: "Файл", point: 7},
+            {
+
+                question: "Какое наибольшее количество символов имеет имя файла или каталога в Windows?",
+                answer: "255",
+                point: 12
+            },
+            {question: "Какое наибольшее количество символов имеет расширение имени файла?", answer: "3", point: 16},
+        ];
+
+        const dataTest = [
+            {id: 0, name: "История", maxPoint: 11, questions: questionHist},
+            {id: 1, name: "Информатика", maxPoint: 11, questions: questionInf}
+        ];
+
+        const testJson = JSON.stringify(dataTest);
+        $.cookie("test-data", testJson);
+    }
+</script>
 </body>
 </html>
