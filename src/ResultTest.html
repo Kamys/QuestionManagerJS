@@ -27,52 +27,34 @@
 <div id="background">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h1 class="text-white" id="test-name">test</h1>
-            </div>
-        </div>
-        <div class="row text-white">
-            <div class="col-12">
-                <h5 id="question-text">Текст вопроса</h5>
-                <input type="email" id="answer-input" class="form-control" aria-describedby="emailHelp"
-                       placeholder="Ответ">
+            <div class="col-12 text-white">
+                <h1>Тест: <span class="test-name">История</span> <span id="test-status">Завершён успешно</span></h1>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 mt-1">
-                <button type="button" id="question-btn-reply" class="btn btn-primary col-4">Ответить</button>
+            <div class="col-12 text-white">
+                <h4>Правильных ответов <span id="answer-passed-true">5</span> из <span id="answer-all">10</span>
+                </h4>
             </div>
         </div>
     </div>
 </div>
-</body>
 <script src="js/DataProvider.js"></script>
 <script>
-    const dataProvider = new DataProvider();
+    let dataProvider = new DataProvider();
     const dataTest = dataProvider.getTests();
-    let currentPassTest = dataProvider.getCurrentPassTest();
-    let currentQuestion = dataTest[currentPassTest.testId].questions[currentPassTest.questionId];
+    const currentPassTest = dataProvider.getCurrentPassTest();
+    dataProvider.getCurrentPassTest();
+    let currentTest = dataTest[currentPassTest.testId];
 
-    showTitle();
-    $('#question-text').text(currentQuestion.question);
+    $('#test-name').text(currentTest);
 
-    $('#question-btn-reply').click(function () {
-        let answer = $('#answer-input').val();
-        let a = {
-            questionId: currentPassTest.questionId,
-            passed: answer === currentQuestion.answer
-        };
-        currentPassTest.answers.push(a);
-        currentPassTest.questionId += 1;
-        if(currentPassTest.questionId >= dataTest[currentPassTest.testId].questions.length){
-            location.href = 'ResultTest.html';
-        }
-        location.href = 'PassTest.html';
-        dataProvider.saveCurrentTest(currentPassTest)
-    });
-
-    function showTitle() {
-        $('#test-name').text('Вы проходите тест: ' + dataTest[currentPassTest.testId].name);
-    }
+    let passedTrue = currentPassTest.answers.filter(t => t.passed === true);
+    let allQuestions = currentTest.answers.length;
+    let answerPassedTrue = passedTrue.length;
+    $('#answer-passed-true').text(answerPassedTrue);
+    $('#answer-all').text(allQuestions);
+    $('#test-status').text();
 </script>
+</body>
 </html>

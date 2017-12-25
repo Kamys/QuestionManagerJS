@@ -20,7 +20,7 @@ const DataProvider = (function () {
         $.cookie("current-test", testJson);
     };
 
-    Singleton.prototype.getCurrentTest = function () {
+    Singleton.prototype.getCurrentPassTest = function () {
         return JSON.parse($.cookie("current-test"));
     };
 
