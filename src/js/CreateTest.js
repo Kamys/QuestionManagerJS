@@ -85,6 +85,16 @@ $(function () {
         updateListTest();
         showTest(dataTest[length]);
     });
+    $('#test-btn-delete').click(function () {
+        let indexOf = dataTest.indexOf(currentTest);
+        dataTest.splice(indexOf, 1);
+        updateListTest();
+        $('#test-input-name').val('');
+        $('#test-input-max-points').val('');
+        $('#test-btn-delete').prop('disabled', true);
+        toastr.info("Тест удалён")
+    }).prop('disabled', true);
+
     updateListTest();
     initChangeInputTest();
 
@@ -104,6 +114,7 @@ $(function () {
     function showTest(test) {
         $('#test-input-name').val(test.name);
         $('#test-input-max-points').val(test.maxPoint);
+        $('#test-btn-delete').prop('disabled', false);
         currentTest = test;
 
         let questions = test.questions;
