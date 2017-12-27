@@ -72,12 +72,12 @@
         };
         currentPassTest.answers.push(a);
         currentPassTest.questionId += 1;
+        dataProvider.saveCurrentTest(currentPassTest);
         if (currentPassTest.questionId >= dataTest[currentPassTest.testId].questions.length) {
             location.href = 'ResultTest.html';
             return;
         }
         location.href = 'PassTest.html';
-        dataProvider.saveCurrentTest(currentPassTest)
     });
 
     function showTitle() {

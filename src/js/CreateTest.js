@@ -79,6 +79,12 @@ $(function () {
     questionManager.init();
 
     $('#test-btn-save').click(saveTest);
+    $('#test-btn-add').click(function () {
+        let length = dataTest.length;
+        dataTest.push({id: length, name: "Тест " + length, maxPoint: 0, questions:[]});
+        updateListTest();
+        showTest(dataTest[length]);
+    });
     updateListTest();
     initChangeInputTest();
 
@@ -133,6 +139,7 @@ $(function () {
             tab.click(itemClick);
             DDL.append(tab)
         });
+
         function itemClick() {
             const index = $(this).attr('index');
             let item = listData[index];
