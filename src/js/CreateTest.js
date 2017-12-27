@@ -17,10 +17,11 @@ $(function () {
             }
         };
         let show = function (question) {
-            $('#question-input').val(question.question);
-            $('#answer-input').val(question.answer);
-            $('#point-input').val(question.point);
+            $('#question-input').val(question.question).prop('disabled', false);
+            $('#answer-input').val(question.answer).prop('disabled', false);
+            $('#point-input').val(question.point).prop('disabled', false);
             $('#question-btn-delete').prop('disabled', false);
+            $('#question-btn-add').prop('disabled', false);
             questionEdit = question;
         };
 
@@ -47,8 +48,21 @@ $(function () {
             $('#question-input').val('');
             $('#answer-input').val('');
             $('#point-input').val('');
+            hideInput();
             $('#question-btn-delete').prop('disabled', true);
             toastr.info("Вопрос удалён")
+        };
+
+        let hideInput = function () {
+            $('#question-input').prop('disabled', true);
+            $('#answer-input').prop('disabled', true);
+            $('#point-input').prop('disabled', true);
+        };
+
+        let hideBtn = function () {
+            $('#question-btn-add').prop('disabled', true);
+            $('#question-btn-delete').prop('disabled', true);
+            $('#question-btn-save').prop('disabled', true);
         };
 
         return {
@@ -58,7 +72,6 @@ $(function () {
                 $('#question-btn-add').click(addQuestion);
                 $('#question-btn-delete').click(deleteCurrent)
                     .prop('disabled', true);
-
                 initChangeInput();
             },
             setQuestion: function (data) {
@@ -67,6 +80,10 @@ $(function () {
                 if (questions.length !== 0) {
                     show(questions[0]);
                 }
+            },
+            hide: function () {
+                hideInput();
+                hideBtn();
             }
         }
     }());
@@ -77,11 +94,15 @@ $(function () {
 
 
     questionManager.init();
+    questionManager.hide();
+
+    $('#test-input-name').prop('disabled', true);
+    $('#test-input-max-points').prop('disabled', true);
 
     $('#test-btn-save').click(saveTest);
     $('#test-btn-add').click(function () {
         let length = dataTest.length;
-        dataTest.push({id: length, name: "Тест " + length, maxPoint: 0, questions:[]});
+        dataTest.push({id: length, name: "Тест " + length, maxPoint: 0, questions: []});
         updateListTest();
         showTest(dataTest[length]);
     });
@@ -89,9 +110,10 @@ $(function () {
         let indexOf = dataTest.indexOf(currentTest);
         dataTest.splice(indexOf, 1);
         updateListTest();
-        $('#test-input-name').val('');
-        $('#test-input-max-points').val('');
+        $('#test-input-name').val('').prop('disabled', true);
+        $('#test-input-max-points').val('').prop('disabled', true);
         $('#test-btn-delete').prop('disabled', true);
+        questionManager.hide();
         toastr.info("Тест удалён")
     }).prop('disabled', true);
 
@@ -112,9 +134,10 @@ $(function () {
     }
 
     function showTest(test) {
-        $('#test-input-name').val(test.name);
-        $('#test-input-max-points').val(test.maxPoint);
+        $('#test-input-name').val(test.name).prop('disabled', false);
+        $('#test-input-max-points').val(test.maxPoint).prop('disabled', false);
         $('#test-btn-delete').prop('disabled', false);
+        $('#question-btn-add').prop('disabled', false);
         currentTest = test;
 
         let questions = test.questions;
