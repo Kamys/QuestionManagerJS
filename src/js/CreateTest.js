@@ -37,6 +37,7 @@ $(function () {
             questionEdit.point = $('#point-input').val();
             updateListQuestions();
             $('#question-btn-save').prop('disabled', true);
+            saveData();
         };
 
         let deleteCurrent = function () {

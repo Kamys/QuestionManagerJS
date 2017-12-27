@@ -43,10 +43,18 @@
                 <button type="button" id="question-btn-reply" class="btn btn-primary col-4">Ответить</button>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <button type="button" id="navigation-btn-backToMainMenu" class="btn btn-primary col-3 mt-2">Вернуться на
+                    главное меню
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 </body>
 <script src="js/DataProvider.js"></script>
+<script src="js/Navigation.js"></script>
 <script>
     const dataProvider = new DataProvider();
     const dataTest = dataProvider.getTests();
@@ -64,7 +72,7 @@
         };
         currentPassTest.answers.push(a);
         currentPassTest.questionId += 1;
-        if(currentPassTest.questionId >= dataTest[currentPassTest.testId].questions.length){
+        if (currentPassTest.questionId >= dataTest[currentPassTest.testId].questions.length) {
             location.href = 'ResultTest.html';
             return;
         }

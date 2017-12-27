@@ -42,9 +42,17 @@
                 </h4>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <button type="button" id="navigation-btn-backToMainMenu" class="btn btn-primary col-3 mt-2">Вернуться на
+                    главное меню
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 <script src="js/DataProvider.js"></script>
+<script src="js/Navigation.js"></script>
 <script>
     let dataProvider = new DataProvider();
     const dataTest = dataProvider.getTests();
@@ -63,10 +71,10 @@
     let pointsObtained = 0;
     passedAnswersTrue.forEach(answer => {
         let question = currentTest.questions[answer.questionId];
-        pointsObtained += question.point;
+        pointsObtained += parseInt(question.point);
     });
     if (pointsObtained >= currentTest.maxPoint) {
-        $('#test-status').text("Поздравляем, Вы успешно сдали тест!").attr("class",'bg-success text-white');
+        $('#test-status').text("Поздравляем, Вы успешно сдали тест!").attr("class", 'bg-success text-white');
     }
 </script>
 </body>

@@ -45,9 +45,13 @@
         <div class="row">
             <button type="button" class="btn btn-primary" id="test-btn-start">Пройти тест</button>
         </div>
+        <div class="row">
+            <button type="button" id="navigation-btn-backToMainMenu" class="btn btn-primary col-3 mt-2">Вернуться на главное меню</button>
+        </div>
     </div>
 </div>
 <script src="js/DataProvider.js"></script>
+<script src="js/Navigation.js"></script>
 <script>
     const dataProvider = new DataProvider();
     const dataTest = dataProvider.getTests();
